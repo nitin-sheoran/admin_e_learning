@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "799694197291",
+    "firebase_url": "https://admin-e-learning-a7fdd-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "admin-e-learning-a7fdd",
+    "storage_bucket": "admin-e-learning-a7fdd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799694197291:android:ad0f043bb98405f222506e",
+        "android_client_info": {
+          "package_name": "com.example.admin_e_learning"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfN2mLeA5rFehzotzOVBTTE-xf2MOExu0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

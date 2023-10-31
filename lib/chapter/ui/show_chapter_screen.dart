@@ -163,7 +163,7 @@ class _ShowChapterScreenState extends State<ShowChapterScreen> {
                                               }
                                             },
                                             child: const Text(
-                                              "featured",
+                                              "Delete",
                                             ),
                                           ),
                                         ],

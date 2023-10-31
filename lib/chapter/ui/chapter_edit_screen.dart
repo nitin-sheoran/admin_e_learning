@@ -6,12 +6,12 @@ import 'package:admin_e_learning/course/shared/color_const.dart';
 import 'package:admin_e_learning/chapter/shared/colors_const.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class EditScreen extends StatefulWidget {
+class ChapterEditScreen extends StatefulWidget {
   final String courseId;
   final ChapterService chapterService;
   final Chapter chapter;
 
-  EditScreen({
+  const ChapterEditScreen({
     required this.chapter,
     required this.courseId,
     required this.chapterService,
@@ -19,10 +19,10 @@ class EditScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<EditScreen> createState() => _EditScreenState();
+  State<ChapterEditScreen> createState() => _ChapterEditScreenState();
 }
 
-class _EditScreenState extends State<EditScreen> {
+class _ChapterEditScreenState extends State<ChapterEditScreen> {
   late TextEditingController chapterNameController;
   late TextEditingController contentController;
 
@@ -88,7 +88,7 @@ class _EditScreenState extends State<EditScreen> {
                     content: contentController.text,
                     chapterName: chapterNameController.text,
                   );
-                   widget.chapterService.edit(chapter);
+                   widget.chapterService.chapterUpdate(chapter);
                   Fluttertoast.showToast(msg: 'Update Successfully');
                   Navigator.pop(context);
                   chapterNameController.clear();

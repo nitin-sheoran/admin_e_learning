@@ -3,7 +3,7 @@ import 'package:admin_e_learning/chapter/service/chapter_service.dart';
 import 'package:admin_e_learning/chapter/shared/colors_const.dart';
 import 'package:admin_e_learning/chapter/ui/add_chapter_screen.dart';
 import 'package:admin_e_learning/chapter/ui/content_screen.dart';
-import 'package:admin_e_learning/chapter/ui/edit_screen.dart';
+import 'package:admin_e_learning/chapter/ui/chapter_edit_screen.dart';
 import 'package:admin_e_learning/course/model/course_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -127,7 +127,7 @@ class _ShowChapterScreenState extends State<ShowChapterScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => EditScreen(
+                                    builder: (context) => ChapterEditScreen(
                                         chapter: chapterList[index],
                                         courseId: widget.courseId,
                                         chapterService: widget.chapterService),
@@ -156,7 +156,7 @@ class _ShowChapterScreenState extends State<ShowChapterScreen> {
                                           TextButton(
                                             onPressed: () async {
                                               await widget.chapterService
-                                                  .deleteChapter(
+                                                  .chapterDelete(
                                                       chapterList[index]);
                                               if (mounted) {
                                                 Navigator.pop(context);

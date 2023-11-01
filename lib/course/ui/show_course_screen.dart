@@ -8,6 +8,7 @@ import 'package:admin_e_learning/course/ui/add_course_screen.dart';
 import 'package:admin_e_learning/chapter/service/chapter_service.dart';
 import 'package:admin_e_learning/chapter/ui/show_chapter_screen.dart';
 import 'package:admin_e_learning/course/service/course_service.dart';
+import 'package:admin_e_learning/course/ui/course_update_screen.dart';
 
 class ShowCourseScreen extends StatefulWidget {
   final CourseService courseService;
@@ -117,8 +118,7 @@ class _ShowCourseScreenState extends State<ShowCourseScreen> {
                           builder: (context) => ShowChapterScreen(
                             course: courseList[index],
                             chapterService: ChapterService(),
-                            courseId: courseList[index]
-                                .courseId!,
+                            courseId: courseList[index].courseId!,
                           ),
                         ),
                       );
@@ -129,13 +129,70 @@ class _ShowCourseScreenState extends State<ShowCourseScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          if (courseList[index].imgUrl.isNotEmpty)
-                            Image.network(
-                              courseList[index].imgUrl,
-                              height: 110,
-                              width: 140,
-                              fit: BoxFit.cover,
-                            ),
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CourseUpdateScreen(
+                                        course: courseList[index],
+                                        courseService: CourseService(),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(Icons.edit),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: const Text("Delete Alert"),
+                                          content: const Text(
+                                              "Are you sure to delete it ?"),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text(
+                                                  "Cancel",
+                                                )),
+                                            TextButton(
+                                              onPressed: () async {
+                                                await widget.courseService
+                                                    .courseDelete(
+                                                        courseList[index]);
+                                                if (mounted) {
+                                                  Navigator.pop(context);
+                                                }
+                                              },
+                                              child: const Text(
+                                                "Delete",
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      });
+                                },
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: ColorsConst.redColor,
+                                ),
+                              ),
+                              if (courseList[index].imgUrl.isNotEmpty)
+                                Image.network(
+                                  courseList[index].imgUrl,
+                                  height: 100,
+                                  width: 100,
+                                  fit: BoxFit.cover,
+                                ),
+                            ],
+                          ),
                           Text(
                             courseList[index].courseName,
                             style: const TextStyle(

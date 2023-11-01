@@ -13,7 +13,7 @@ class ChapterService {
     return FirebaseDatabase.instance.ref('chapter').child(courseId).onValue;
   }
 
-  Future<void> edit(Chapter chapter) async {
+  Future<void> chapterUpdate(Chapter chapter) async {
     final dbRef = FirebaseDatabase.instance.ref();
     await dbRef
         .child('chapter')
@@ -22,7 +22,7 @@ class ChapterService {
         .update(chapter.toMap());
   }
 
-  Future<void> deleteChapter(Chapter chapter) async {
+  Future<void> chapterDelete(Chapter chapter) async {
     final dbRef = FirebaseDatabase.instance.ref();
     await dbRef
         .child('chapter')

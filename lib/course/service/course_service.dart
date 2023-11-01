@@ -17,5 +17,26 @@ class CourseService {
   Stream<DatabaseEvent> getCourseStream() {
     return databaseRef.onValue;
   }
+
+  // Future<void> updateCourse(Course course) async {
+  //   final dbRef = FirebaseDatabase.instance.ref();
+  //   await dbRef
+  //       .child('courses')
+  //       .child(course.courseId!)
+  //       .update(course.toMap());
+  // }
+
+  Future<void> update(Course course) async {
+    final dbRef = databaseRef.child(course.courseId!);
+    await dbRef.update({
+      'courseName': course.courseName,
+      'imgUrl': course.imgUrl,
+    });
+  }
+
+  Future<void> courseDelete(Course course) async {
+    final dbRef = FirebaseDatabase.instance.ref();
+    await dbRef.child('courses').child(course.courseId.toString()).remove();
+  }
 }
 //courses->random_id->set our data

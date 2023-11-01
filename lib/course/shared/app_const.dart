@@ -14,6 +14,7 @@ class AppConst {
   static const String buttonText = 'Add Course';
   static const String buttonText2 = 'Show Course';
   static const String updateText = 'Edit Chapter';
+  static const String updateText1 = 'Update Quiz';
 
 }
 

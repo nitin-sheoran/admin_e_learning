@@ -9,10 +9,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 class AddQuizScreen extends StatefulWidget {
   final String chapterId;
   final QuizService quizService;
-  final Function(String) onOptionSelected;
 
   const AddQuizScreen({
-    required this.onOptionSelected,
     required this.quizService,
     required this.chapterId,
     super.key,
@@ -38,117 +36,128 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(StringConstClass.addQuiz),
+        title: const Text(
+          StringConstClass.addQuiz,
+          style: TextStyle(
+            color: ColorsConst.whiteColor,
+          ),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: ColorsConst.whiteColor,
+          ),
+        ),
         backgroundColor: ColorsConst.blueColor,
       ),
       body: Form(
         key: formKey,
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 24, right: 24, top: 14),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: questionController,
-                    validator: (String? value) {
-                      return Validators.question(value);
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Question',
+        child: Padding(
+          padding: const EdgeInsets.only(left: 24, right: 24, top: 14),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: questionController,
+                  validator: (String? value) {
+                    return Validators.question(value);
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Question',
+                  ),
+                ),
+                TextFormField(
+                  controller: option1Controller,
+                  validator: (String? value) {
+                    return Validators.option1(value);
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Option 1',
+                  ),
+                ),
+                TextFormField(
+                  controller: option2Controller,
+                  validator: (String? value) {
+                    return Validators.option2(value);
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Option 2',
+                  ),
+                ),
+                TextFormField(
+                  controller: option3Controller,
+                  validator: (String? value) {
+                    return Validators.option3(value);
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Option 3',
+                  ),
+                ),
+                TextFormField(
+                  controller: option4Controller,
+                  validator: (String? value) {
+                    return Validators.option4(value);
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Option 4',
+                  ),
+                ),
+                const SizedBox(
+                  height: 14,
+                ),
+                Row(
+                  children: [
+                    Radio<String>(
+                      value: 'A',
+                      groupValue: selectedOption,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedOption = value!;
+                        });
+                      },
                     ),
-                  ),
-                  TextFormField(
-                    controller: option1Controller,
-                    validator: (String? value) {
-                      return Validators.option1(value);
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Option 1',
+                    const Text('Option A'),
+                    Radio<String>(
+                      value: 'B',
+                      groupValue: selectedOption,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedOption = value!;
+                        });
+                      },
                     ),
-                  ),
-                  TextFormField(
-                    controller: option2Controller,
-                    validator: (String? value) {
-                      return Validators.option2(value);
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Option 2',
+                    const Text('Option B'),
+                    Radio<String>(
+                      value: 'C',
+                      groupValue: selectedOption,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedOption = value!;
+                        });
+                      },
                     ),
-                  ),
-                  TextFormField(
-                    controller: option3Controller,
-                    validator: (String? value) {
-                      return Validators.option3(value);
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Option 3',
+                    const Text('Option C'),
+                    Radio<String>(
+                      value: 'D',
+                      groupValue: selectedOption,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedOption = value!;
+                        });
+                      },
                     ),
-                  ),
-                  TextFormField(
-                    controller: option4Controller,
-                    validator: (String? value) {
-                      return Validators.option4(value);
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Option 4',
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 14,
-                  ),
-                  Row(
-                    children: [
-                      Radio<String>(
-                        value: 'A',
-                        groupValue: selectedOption,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedOption = value!;
-                            widget.onOptionSelected(selectedOption);
-                          });
-                        },
-                      ),
-                      const Text('Option A'),
-                      Radio<String>(
-                        value: 'B',
-                        groupValue: selectedOption,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedOption = value!;
-                            widget.onOptionSelected(selectedOption);
-                          });
-                        },
-                      ),
-                      const Text('Option B'),
-                      Radio<String>(
-                        value: 'C',
-                        groupValue: selectedOption,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedOption = value!;
-                            widget.onOptionSelected(selectedOption);
-                          });
-                        },
-                      ),
-                      const Text('Option C'),
-                      Radio<String>(
-                        value: 'D',
-                        groupValue: selectedOption,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedOption = value!;
-                            widget.onOptionSelected(selectedOption);
-                          });
-                        },
-                      ),
-                      const Text('Option D'),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
+                    const Text('Option D'),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: ElevatedButton(
                     onPressed: () {
                       if (formKey.currentState?.validate() ?? false) {
                         Quiz quiz = Quiz(
@@ -161,14 +170,18 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                           correctOption: selectedOption,
                         );
                         widget.quizService.addQuiz(quiz);
-                        widget.onOptionSelected(selectedOption);
                         Fluttertoast.showToast(msg: 'Saved');
                       }
                     },
-                    child: const Text('Add Quiz'),
+                    child: const Text(
+                      'Add Quiz',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

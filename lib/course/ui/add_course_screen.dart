@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:admin_e_learning/chapter/shared/colors_const.dart';
 import 'package:admin_e_learning/course/model/course_model.dart';
 import 'package:admin_e_learning/course/service/course_service.dart';
 import 'package:admin_e_learning/course/shared/app_const.dart';
 import 'package:admin_e_learning/course/shared/color_const.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class AddCourseScreen extends StatelessWidget {
   AddCourseScreen({super.key, required this.courseService});

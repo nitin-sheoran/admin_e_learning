@@ -83,8 +83,9 @@ class _CourseUpdateScreenState extends State<CourseUpdateScreen> {
                   );
                   widget.courseService.update(course);
                   Fluttertoast.showToast(
-                    msg: 'Saved Successfully',
+                    msg: 'Update Successfully',
                   );
+                  Navigator.pop(context);
                 },
                 child: const Text(
                   AppConst.buttonText,

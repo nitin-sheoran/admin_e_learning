@@ -122,6 +122,14 @@ class _ShowChapterScreenState extends State<ShowChapterScreen> {
                       children: [
                         Row(
                           children: [
+                            Text(
+                              chapterList[index].chapterName,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Spacer(),
                             IconButton(
                               onPressed: () {
                                 Navigator.push(
@@ -139,50 +147,41 @@ class _ShowChapterScreenState extends State<ShowChapterScreen> {
                             IconButton(
                               onPressed: () {
                                 showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: const Text("Delete Alert"),
-                                        content: const Text(
-                                            "Are you sure to delete it ?"),
-                                        actions: [
-                                          TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: const Text(
-                                                "Cancel",
-                                              )),
-                                          TextButton(
-                                            onPressed: () async {
-                                              await widget.chapterService
-                                                  .chapterDelete(
-                                                      chapterList[index]);
-                                              if (mounted) {
-                                                Navigator.pop(context);
-                                              }
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: const Text("Delete Alert"),
+                                      content: const Text(
+                                          "Are you sure to delete it ?"),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
                                             },
                                             child: const Text(
-                                              "Delete",
-                                            ),
+                                              "Cancel",
+                                            )),
+                                        TextButton(
+                                          onPressed: () async {
+                                            await widget.chapterService
+                                                .chapterDelete(
+                                                    chapterList[index]);
+                                            if (mounted) {
+                                              Navigator.pop(context);
+                                            }
+                                          },
+                                          child: const Text(
+                                            "Delete",
                                           ),
-                                        ],
-                                      );
-                                    });
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                               },
                               icon: const Icon(
                                 Icons.delete,
                                 color: ColorsConst.redColor,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              chapterList[index].chapterName,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],

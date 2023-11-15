@@ -34,10 +34,10 @@ class _QuizUpdateScreenState extends State<QuizUpdateScreen> {
   void initState() {
     Quiz quiz = widget.quiz;
     questionController = TextEditingController(text: quiz.question);
-    option1Controller = TextEditingController(text: quiz.option1);
-    option2Controller = TextEditingController(text: quiz.option2);
-    option3Controller = TextEditingController(text: quiz.option3);
-    option4Controller = TextEditingController(text: quiz.option4);
+    option1Controller = TextEditingController(text: quiz.optionA);
+    option2Controller = TextEditingController(text: quiz.optionB);
+    option3Controller = TextEditingController(text: quiz.optionC);
+    option4Controller = TextEditingController(text: quiz.optionD);
     super.initState();
   }
 
@@ -171,24 +171,24 @@ class _QuizUpdateScreenState extends State<QuizUpdateScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (formKey.currentState?.validate() ?? false) {
-                        Quiz quiz = Quiz(
-                          question: questionController.text,
-                          option1: option1Controller.text,
-                          option2: option2Controller.text,
-                          option3: option3Controller.text,
-                          option4: option4Controller.text,
-                          chapterId: widget.chapterId,
-                          correctOption: selectedOption,
-                          questionId: widget.quiz.questionId,
-                        );
-                        widget.quizService.quizUpdate(quiz);
-                        Fluttertoast.showToast(msg: 'Saved');
-                      }
-                    },
-                    child: const Text('Update Quiz'),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (formKey.currentState?.validate() ?? false) {
+                          Quiz quiz = allController();
+                          widget.quizService.quizUpdate(quiz);
+                          Fluttertoast.showToast(msg: 'Update Successfully');
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: const Text(
+                        'Update Quiz',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -197,5 +197,19 @@ class _QuizUpdateScreenState extends State<QuizUpdateScreen> {
         ),
       ),
     );
+  }
+
+  Quiz allController() {
+    Quiz quiz = Quiz(
+      question: questionController.text,
+      optionA: option1Controller.text,
+      optionB: option2Controller.text,
+      optionC: option3Controller.text,
+      optionD: option4Controller.text,
+      chapterId: widget.chapterId,
+      correctOption: selectedOption,
+      questionId: widget.quiz.questionId,
+    );
+    return quiz;
   }
 }

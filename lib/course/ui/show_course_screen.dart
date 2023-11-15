@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:awesome_icons/awesome_icons.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:admin_e_learning/chapter/shared/string_const.dart';
+import 'package:admin_e_learning/course/shared/app_const.dart';
 import 'package:admin_e_learning/course/model/course_model.dart';
 import 'package:admin_e_learning/course/shared/color_const.dart';
 import 'package:admin_e_learning/chapter/shared/colors_const.dart';
@@ -9,11 +13,11 @@ import 'package:admin_e_learning/chapter/service/chapter_service.dart';
 import 'package:admin_e_learning/chapter/ui/show_chapter_screen.dart';
 import 'package:admin_e_learning/course/service/course_service.dart';
 import 'package:admin_e_learning/course/ui/course_update_screen.dart';
+import 'package:admin_e_learning/course/provider/course_provider.dart';
+
 
 class ShowCourseScreen extends StatefulWidget {
-  final CourseService courseService;
-
-  const ShowCourseScreen({required this.courseService, super.key});
+  const ShowCourseScreen({super.key});
 
   @override
   _ShowCourseScreenState createState() => _ShowCourseScreenState();
@@ -21,6 +25,29 @@ class ShowCourseScreen extends StatefulWidget {
 
 class _ShowCourseScreenState extends State<ShowCourseScreen> {
   final TextEditingController itemController = TextEditingController();
+  late CourseProvider courseProvider;
+
+  @override
+  void initState() {
+    courseProvider = Provider.of<CourseProvider>(context, listen: false);
+    super.initState();
+  }
+
+  DateTime _date = DateTime.now();
+
+  _handleDatePicker() async {
+    final DateTime? date = await showDatePicker(
+      context: context,
+      initialDate: _date,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (date != null && date != _date) {
+      setState(() {
+        _date = date;
+      });
+    }
+  }
 
   bool isSearch = false;
 
@@ -34,7 +61,7 @@ class _ShowCourseScreenState extends State<ShowCourseScreen> {
             context,
             MaterialPageRoute(
               builder: (context) => AddCourseScreen(
-                courseService: widget.courseService,
+                courseService: courseProvider.courseService,
               ),
             ),
           );
@@ -46,19 +73,26 @@ class _ShowCourseScreenState extends State<ShowCourseScreen> {
             ? TextField(
                 controller: itemController,
                 decoration: const InputDecoration(
-                  labelText: 'Search names...',
+                  labelText: AppConst.searchText,
                   labelStyle: TextStyle(color: ColorsConst.whiteColor),
                 ),
                 cursorColor: ColorsConst.whiteColor,
               )
             : const Text(
-                'Courses',
+                AppConst.titleText2,
                 style: TextStyle(
                   color: ColorConst.whiteColor,
                   fontSize: 26,
                 ),
               ),
         actions: [
+          IconButton(
+            onPressed: _handleDatePicker,
+            icon: const Icon(
+              Icons.calendar_month,
+              color: ColorsConst.whiteColor,
+            ),
+          ),
           IconButton(
             onPressed: () {
               setState(() {
@@ -74,10 +108,10 @@ class _ShowCourseScreenState extends State<ShowCourseScreen> {
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
               onPressed: () {
-                Share.share('com.example.admin_e_learning');
+                Share.share(AppConst.shareUrlText);
               },
               icon: const Icon(
-                Icons.share,
+                FontAwesomeIcons.share,
                 color: ColorsConst.whiteColor,
               ),
             ),
@@ -85,131 +119,141 @@ class _ShowCourseScreenState extends State<ShowCourseScreen> {
         ],
         backgroundColor: ColorConst.greenColor,
       ),
-      body: StreamBuilder(
-        stream: widget.courseService.getCourseStream(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            List<Course> courseList = [];
-            DataSnapshot dataSnapshot = snapshot.data!.snapshot;
-            final map = dataSnapshot.value as Map<dynamic, dynamic>;
+      body: Consumer<CourseProvider>(builder: (create, provider, widget) {
+        return StreamBuilder(
+          stream: provider.getCourseStream(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              List<Course> courseList = [];
+              DataSnapshot dataSnapshot = snapshot.data!.snapshot;
+              final map = dataSnapshot.value as Map<dynamic, dynamic>;
 
-            forEach(map, courseList);
+              forEach(map, courseList);
 
-            return Padding(
-              padding: const EdgeInsets.all(16),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 4,
-                  crossAxisSpacing: 4,
-                  mainAxisExtent: 200,
-                ),
-                itemCount: courseList.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ShowChapterScreen(
-                            course: courseList[index],
-                            chapterService: ChapterService(),
-                            courseId: courseList[index].courseId!,
-                          ),
-                        ),
-                      );
-                    },
-                    child: Card(
-                      surfaceTintColor: ColorConst.whiteColor,
-                      color: ColorsConst.whiteColor,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CourseUpdateScreen(
-                                        course: courseList[index],
-                                        courseService: CourseService(),
-                                      ),
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(Icons.edit),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: const Text("Delete Alert"),
-                                          content: const Text(
-                                              "Are you sure to delete it ?"),
-                                          actions: [
-                                            TextButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: const Text(
-                                                  "Cancel",
-                                                )),
-                                            TextButton(
-                                              onPressed: () async {
-                                                await widget.courseService
-                                                    .courseDelete(
-                                                        courseList[index]);
-                                                if (mounted) {
-                                                  Navigator.pop(context);
-                                                }
-                                              },
-                                              child: const Text(
-                                                "Delete",
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                },
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: ColorsConst.redColor,
-                                ),
-                              ),
-                              if (courseList[index].imgUrl.isNotEmpty)
-                                Image.network(
-                                  courseList[index].imgUrl,
-                                  height: 100,
-                                  width: 100,
-                                  fit: BoxFit.cover,
-                                ),
-                            ],
-                          ),
-                          Text(
-                            courseList[index].courseName,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+              return Padding(
+                padding: const EdgeInsets.all(16),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 4,
+                    crossAxisSpacing: 4,
+                    mainAxisExtent: 200,
+                  ),
+                  itemCount: courseList.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ShowChapterScreen(
+                              course: courseList[index],
+                              courseId: courseList[index].courseId!,
                             ),
                           ),
-                        ],
+                        );
+                      },
+                      child: Card(
+                        surfaceTintColor: ColorConst.whiteColor,
+                        color: ColorsConst.whiteColor,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            CourseUpdateScreen(
+                                          course: courseList[index],
+                                          courseService: CourseService(),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text(
+                                    'Edit',
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                ),
+                                const Spacer(),
+                                TextButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: const Text(
+                                                StringConst.deleteAlertText),
+                                            content: const Text(
+                                                StringConst.deleteContentText),
+                                            actions: [
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: const Text(
+                                                    StringConst.cancelText,
+                                                  )),
+                                              TextButton(
+                                                onPressed: () async {
+                                                  await provider.courseService
+                                                      .courseDelete(
+                                                          courseList[index]);
+                                                  if (mounted) {
+                                                    Navigator.pop(context);
+                                                  }
+                                                },
+                                                child: const Text(
+                                                  StringConst.deleteText,
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: const Text(
+                                      'Delete',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        color: ColorsConst.redColor,
+                                      ),
+                                    )),
+                              ],
+                            ),
+                            if (courseList[index].imgUrl.isNotEmpty)
+                              Image.network(
+                                courseList[index].imgUrl,
+                                height: 100,
+                                width: 100,
+                                fit: BoxFit.cover,
+                              ),
+                            Text(
+                              courseList[index].courseName,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
-            );
-          }
-        },
-      ),
+                    );
+                  },
+                ),
+              );
+            }
+          },
+        );
+      }),
     );
   }
 

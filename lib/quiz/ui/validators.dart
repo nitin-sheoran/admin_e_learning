@@ -7,22 +7,22 @@ class Validators{
   }
  static String? option1(String? value) {
    if (value == null || value.isEmpty) {
-     return 'Option 1 is mandatory';
+     return 'Option A is mandatory';
    }
  }
  static String? option2(String? value) {
    if (value == null || value.isEmpty) {
-     return 'Option 2 is mandatory';
+     return 'Option B is mandatory';
    }
  }
  static String? option3(String? value) {
    if (value == null || value.isEmpty) {
-     return 'Option 3 is mandatory';
+     return 'Option C is mandatory';
    }
  }
  static String? option4(String? value) {
    if (value == null || value.isEmpty) {
-     return 'Option 4 is mandatory';
+     return 'Option D is mandatory';
    }
  }
 

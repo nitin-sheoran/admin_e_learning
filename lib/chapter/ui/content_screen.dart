@@ -1,6 +1,7 @@
 import 'package:admin_e_learning/chapter/model/chapter_model.dart';
 import 'package:admin_e_learning/chapter/shared/colors_const.dart';
-import 'package:admin_e_learning/quiz/ui/add_question_screen.dart';
+import 'package:admin_e_learning/quiz/service/quiz_service.dart';
+import 'package:admin_e_learning/quiz/ui/show_quiz_screen.dart';
 import 'package:flutter/material.dart';
 
 class ContentScreen extends StatefulWidget {
@@ -34,7 +35,9 @@ class _ContentScreenState extends State<ContentScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const AddQuestionScreen(),
+                    builder: (context) =>  ShowQuizScreen(
+                      chapterId: widget.chapter.id!,
+                    ),
                   ),
                 );
               },
@@ -49,25 +52,27 @@ class _ContentScreenState extends State<ContentScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-        child: Column(
-          children: [
-            Center(
-              child: Text(
-                widget.chapter.chapterName,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Center(
+                child: Text(
+                  widget.chapter.chapterName,
+                  style:
+                      const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            Text(
-              widget.chapter.content,
-              style: const TextStyle(
-                fontSize: 20,
+              const SizedBox(
+                height: 40,
               ),
-            ),
-          ],
+              Text(
+                widget.chapter.content,
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

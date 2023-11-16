@@ -1,10 +1,9 @@
+import 'package:admin_e_learning/shared/colors_const.dart';
+import 'package:admin_e_learning/shared/string_const.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:admin_e_learning/chapter/shared/colors_const.dart';
 import 'package:admin_e_learning/course/model/course_model.dart';
 import 'package:admin_e_learning/course/service/course_service.dart';
-import 'package:admin_e_learning/course/shared/app_const.dart';
-import 'package:admin_e_learning/course/shared/color_const.dart';
 
 class AddCourseScreen extends StatelessWidget {
   AddCourseScreen({super.key, required this.courseService});
@@ -20,8 +19,8 @@ class AddCourseScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Center(
           child: Text(
-            AppConst.titleText,
-            style: TextStyle(color: ColorConst.whiteColor),
+            StringConst.titleText,
+            style: TextStyle(color: ColorsConst.whiteColor),
           ),
         ),
         leading: IconButton(
@@ -33,7 +32,7 @@ class AddCourseScreen extends StatelessWidget {
             color: ColorsConst.whiteColor,
           ),
         ),
-        backgroundColor: ColorConst.greenColor,
+        backgroundColor: ColorsConst.greenColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -42,13 +41,13 @@ class AddCourseScreen extends StatelessWidget {
             TextField(
               controller: courseNameController,
               decoration: const InputDecoration(
-                labelText: AppConst.courseNameText,
+                labelText: StringConst.courseNameText,
               ),
             ),
             TextField(
               controller: imgUrlController,
               decoration: const InputDecoration(
-                labelText: AppConst.imgUrlText,
+                labelText: StringConst.imgUrlText,
               ),
             ),
             const SizedBox(
@@ -64,12 +63,12 @@ class AddCourseScreen extends StatelessWidget {
                   );
                   courseService.addCourse(course);
                   Fluttertoast.showToast(
-                    msg: AppConst.toastText1,
+                    msg: StringConst.toastText1,
                   );
                   allClear();
                 },
                 child: const Text(
-                  AppConst.buttonText,
+                  StringConst.buttonText,
                   style: TextStyle(fontSize: 20),
                 ),
               ),

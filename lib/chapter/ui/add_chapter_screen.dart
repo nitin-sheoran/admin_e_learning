@@ -1,10 +1,8 @@
 import 'package:admin_e_learning/chapter/model/chapter_model.dart';
 import 'package:admin_e_learning/chapter/service/chapter_service.dart';
-import 'package:admin_e_learning/chapter/shared/string_const.dart';
+import 'package:admin_e_learning/shared/colors_const.dart';
+import 'package:admin_e_learning/shared/string_const.dart';
 import 'package:flutter/material.dart';
-import 'package:admin_e_learning/course/shared/app_const.dart';
-import 'package:admin_e_learning/course/shared/color_const.dart';
-import 'package:admin_e_learning/chapter/shared/colors_const.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AddChapterScreen extends StatelessWidget {
@@ -25,9 +23,9 @@ class AddChapterScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Center(
           child: Text(
-            AppConst.titleText,
+            StringConst.titleText,
             style: TextStyle(
-              color: ColorConst.whiteColor,
+              color: ColorsConst.whiteColor,
             ),
           ),
         ),
@@ -78,7 +76,7 @@ class AddChapterScreen extends StatelessWidget {
                   chapterNameController.clear();
                 },
                 child: const Text(
-                  AppConst.buttonText,
+                  StringConst.buttonText,
                   style: TextStyle(fontSize: 20),
                 ),
               ),

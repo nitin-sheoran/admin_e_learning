@@ -1,10 +1,10 @@
 import 'package:admin_e_learning/chapter/provider/chapter_provider.dart';
+import 'package:admin_e_learning/shared/colors_const.dart';
+import 'package:admin_e_learning/shared/string_const.dart';
 import 'package:flutter/material.dart';
 import 'package:admin_e_learning/chapter/model/chapter_model.dart';
-import 'package:admin_e_learning/chapter/shared/colors_const.dart';
-import 'package:admin_e_learning/chapter/shared/string_const.dart';
 import 'package:admin_e_learning/chapter/ui/add_chapter_screen.dart';
-import 'package:admin_e_learning/chapter/ui/content_screen.dart';
+import 'package:admin_e_learning/chapter/ui/content_detail_screen.dart';
 import 'package:admin_e_learning/chapter/ui/chapter_edit_screen.dart';
 import 'package:admin_e_learning/course/model/course_model.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -99,7 +99,7 @@ class _ShowChapterScreenState extends State<ShowChapterScreen> {
                 map.forEach((key, value) {
                   var chapter = Chapter(
                     id: value[StringConst.id] ?? '',
-                    courseId: value[StringConst.courseId] ?? '',
+                    courseId: value[StringConst.courseId1] ?? '',
                     chapterName: value[StringConst.chapterName] ?? '',
                     content: value[StringConst.content] ?? '',
                   );
@@ -120,7 +120,7 @@ class _ShowChapterScreenState extends State<ShowChapterScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ContentScreen(
+                            builder: (context) => ContentDetailScreen(
                               chapter: chapterList[index],
                             ),
                           ),

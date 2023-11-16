@@ -1,9 +1,9 @@
-import 'package:admin_e_learning/chapter/shared/colors_const.dart';
-import 'package:admin_e_learning/chapter/shared/string_const.dart';
 import 'package:admin_e_learning/quiz/model/quiz_model.dart';
 import 'package:admin_e_learning/quiz/provider/quiz_provider.dart';
 import 'package:admin_e_learning/quiz/shared/string_const_class.dart';
 import 'package:admin_e_learning/quiz/ui/validators.dart';
+import 'package:admin_e_learning/shared/colors_const.dart';
+import 'package:admin_e_learning/shared/string_const.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +44,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          StringConstClass.addQuiz,
+          StringConst.addQuiz,
           style: TextStyle(
             color: ColorsConst.whiteColor,
           ),
@@ -75,7 +75,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                         return Validators.question(value);
                       },
                       decoration: const InputDecoration(
-                        labelText: StringConstClass.question,
+                        labelText: StringConst.question,
                       ),
                     ),
                     TextFormField(
@@ -84,7 +84,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                         return Validators.option1(value);
                       },
                       decoration: const InputDecoration(
-                        labelText: StringConstClass.optionA,
+                        labelText: StringConst.optionA,
                       ),
                     ),
                     TextFormField(
@@ -93,7 +93,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                         return Validators.option2(value);
                       },
                       decoration: const InputDecoration(
-                        labelText: StringConstClass.optionB,
+                        labelText: StringConst.optionB,
                       ),
                     ),
                     TextFormField(
@@ -102,7 +102,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                         return Validators.option3(value);
                       },
                       decoration: const InputDecoration(
-                        labelText: StringConstClass.optionC,
+                        labelText: StringConst.optionC,
                       ),
                     ),
                     TextFormField(
@@ -111,7 +111,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                         return Validators.option4(value);
                       },
                       decoration: const InputDecoration(
-                        labelText: StringConstClass.optionD,
+                        labelText: StringConst.optionD,
                       ),
                     ),
                     const SizedBox(
@@ -122,7 +122,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                       child: Row(
                         children: [
                           Radio<String>(
-                            value: StringConstClass.textA,
+                            value: StringConst.textA,
                             groupValue: selectedOption,
                             onChanged: (value) {
                               setState(() {
@@ -130,9 +130,9 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                               });
                             },
                           ),
-                          const Text(StringConstClass.optionA),
+                          const Text(StringConst.optionA),
                           Radio<String>(
-                            value: StringConstClass.textB,
+                            value: StringConst.textB,
                             groupValue: selectedOption,
                             onChanged: (value) {
                               setState(() {
@@ -140,9 +140,9 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                               });
                             },
                           ),
-                          const Text(StringConstClass.optionB),
+                          const Text(StringConst.optionB),
                           Radio<String>(
-                            value: StringConstClass.textC,
+                            value: StringConst.textC,
                             groupValue: selectedOption,
                             onChanged: (value) {
                               setState(() {
@@ -150,9 +150,9 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                               });
                             },
                           ),
-                          const Text(StringConstClass.optionC),
+                          const Text(StringConst.optionC),
                           Radio<String>(
-                            value: StringConstClass.textD,
+                            value: StringConst.textD,
                             groupValue: selectedOption,
                             onChanged: (value) {
                               setState(
@@ -162,7 +162,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                               );
                             },
                           ),
-                          const Text(StringConstClass.optionD),
+                          const Text(StringConst.optionD),
                         ],
                       ),
                     ),
@@ -182,7 +182,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                           }
                         },
                         child: const Text(
-                          StringConstClass.addQuiz,
+                          StringConst.addQuiz,
                           style: TextStyle(
                             fontSize: 20,
                           ),

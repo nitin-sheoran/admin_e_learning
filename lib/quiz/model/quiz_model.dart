@@ -1,4 +1,4 @@
-import 'package:admin_e_learning/quiz/shared/string_const_class.dart';
+import 'package:admin_e_learning/shared/string_const.dart';
 
 class Quiz {
   String chapterId;
@@ -23,27 +23,27 @@ class Quiz {
 
   static Quiz fromMap(Map<String, dynamic> map) {
     return Quiz(
-      chapterId: map[StringConstClass.chapterId],
-      questionId: map[StringConstClass.questionId],
-      question: map[StringConstClass.question],
-      optionA: map[StringConstClass.optionA],
-      optionB: map[StringConstClass.optionB],
-      optionC: map[StringConstClass.optionC],
-      optionD: map[StringConstClass.optionD],
-      correctOption: map[StringConstClass.correctOption],
+      chapterId: map[StringConst.chapterId],
+      questionId: map[StringConst.questionId],
+      question: map[StringConst.question],
+      optionA: map[StringConst.optionA],
+      optionB: map[StringConst.optionB],
+      optionC: map[StringConst.optionC],
+      optionD: map[StringConst.optionD],
+      correctOption: map[StringConst.correctOption],
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      StringConstClass.chapterId : chapterId,
-      StringConstClass.questionId: questionId,
-      StringConstClass.question: question,
-      StringConstClass.optionA: optionA,
-      StringConstClass.optionB: optionB,
-      StringConstClass.optionC: optionC,
-      StringConstClass.optionD: optionD,
-      StringConstClass.correctOption: correctOption,
+      StringConst.chapterId : chapterId,
+      StringConst.questionId: questionId,
+      StringConst.question: question,
+      StringConst.optionA: optionA,
+      StringConst.optionB: optionB,
+      StringConst.optionC: optionC,
+      StringConst.optionD: optionD,
+      StringConst.correctOption: correctOption,
     };
   }
 }

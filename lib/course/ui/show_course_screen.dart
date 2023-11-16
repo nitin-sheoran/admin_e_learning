@@ -1,11 +1,9 @@
+import 'package:admin_e_learning/shared/colors_const.dart';
+import 'package:admin_e_learning/shared/string_const.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:admin_e_learning/chapter/shared/string_const.dart';
-import 'package:admin_e_learning/course/shared/app_const.dart';
 import 'package:admin_e_learning/course/model/course_model.dart';
-import 'package:admin_e_learning/course/shared/color_const.dart';
-import 'package:admin_e_learning/chapter/shared/colors_const.dart';
 import 'package:admin_e_learning/course/ui/add_course_screen.dart';
 import 'package:admin_e_learning/chapter/ui/show_chapter_screen.dart';
 import 'package:admin_e_learning/course/service/course_service.dart';
@@ -48,13 +46,13 @@ class _ShowCourseScreenState extends State<ShowCourseScreen> {
       ),
       appBar: AppBar(
         title: const Text(
-                AppConst.titleText2,
-                style: TextStyle(
-                  color: ColorConst.whiteColor,
-                  fontSize: 26,
-                ),
-              ),
-        backgroundColor: ColorConst.greenColor,
+          StringConst.titleText2,
+          style: TextStyle(
+            color: ColorsConst.whiteColor,
+            fontSize: 26,
+          ),
+        ),
+        backgroundColor: ColorsConst.greenColor,
       ),
       body: Consumer<CourseProvider>(builder: (create, provider, widget) {
         return StreamBuilder(
@@ -95,7 +93,7 @@ class _ShowCourseScreenState extends State<ShowCourseScreen> {
                         );
                       },
                       child: Card(
-                        surfaceTintColor: ColorConst.whiteColor,
+                        surfaceTintColor: ColorsConst.whiteColor,
                         color: ColorsConst.whiteColor,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,

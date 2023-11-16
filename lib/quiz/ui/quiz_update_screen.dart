@@ -1,10 +1,9 @@
 import 'package:admin_e_learning/quiz/model/quiz_model.dart';
 import 'package:admin_e_learning/quiz/service/quiz_service.dart';
 import 'package:admin_e_learning/quiz/ui/validators.dart';
+import 'package:admin_e_learning/shared/colors_const.dart';
+import 'package:admin_e_learning/shared/string_const.dart';
 import 'package:flutter/material.dart';
-import 'package:admin_e_learning/course/shared/app_const.dart';
-import 'package:admin_e_learning/course/shared/color_const.dart';
-import 'package:admin_e_learning/chapter/shared/colors_const.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class QuizUpdateScreen extends StatefulWidget {
@@ -51,9 +50,9 @@ class _QuizUpdateScreenState extends State<QuizUpdateScreen> {
       appBar: AppBar(
         title: const Center(
           child: Text(
-            AppConst.updateText1,
+            StringConst.updateText1,
             style: TextStyle(
-              color: ColorConst.whiteColor,
+              color: ColorsConst.whiteColor,
             ),
           ),
         ),

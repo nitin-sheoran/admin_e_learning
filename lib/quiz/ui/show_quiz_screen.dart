@@ -1,11 +1,11 @@
 import 'package:admin_e_learning/quiz/provider/quiz_provider.dart';
-import 'package:admin_e_learning/quiz/shared/string_const_class.dart';
+import 'package:admin_e_learning/shared/colors_const.dart';
+import 'package:admin_e_learning/shared/string_const.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:admin_e_learning/quiz/model/quiz_model.dart';
 import 'package:admin_e_learning/quiz/ui/add_quiz_screen.dart';
 import 'package:admin_e_learning/quiz/ui/quiz_update_screen.dart';
-import 'package:admin_e_learning/chapter/shared/colors_const.dart';
 import 'package:provider/provider.dart';
 
 class ShowQuizScreen extends StatefulWidget {
@@ -202,14 +202,14 @@ class _ShowQuizScreenState extends State<ShowQuizScreen> {
 
   Quiz fromMap(value) {
     var quiz = Quiz(
-      chapterId: value[StringConstClass.chapterId] ?? '',
-      questionId: value[StringConstClass.questionId] ?? '',
-      optionA: value[StringConstClass.optionA] ?? '',
-      optionB: value[StringConstClass.optionB] ?? '',
-      optionC: value[StringConstClass.optionC] ?? '',
-      optionD: value[StringConstClass.optionD] ?? '',
-      question: value[StringConstClass.question] ?? '',
-      correctOption: value[StringConstClass.correctOption] ?? '',
+      chapterId: value[StringConst.chapterId] ?? '',
+      questionId: value[StringConst.questionId] ?? '',
+      optionA: value[StringConst.optionA] ?? '',
+      optionB: value[StringConst.optionB] ?? '',
+      optionC: value[StringConst.optionC] ?? '',
+      optionD: value[StringConst.optionD] ?? '',
+      question: value[StringConst.question] ?? '',
+      correctOption: value[StringConst.correctOption] ?? '',
     );
     return quiz;
   }

@@ -1,19 +1,18 @@
 import 'package:admin_e_learning/chapter/model/chapter_model.dart';
-import 'package:admin_e_learning/chapter/shared/colors_const.dart';
-import 'package:admin_e_learning/quiz/service/quiz_service.dart';
 import 'package:admin_e_learning/quiz/ui/show_quiz_screen.dart';
+import 'package:admin_e_learning/shared/colors_const.dart';
 import 'package:flutter/material.dart';
 
-class ContentScreen extends StatefulWidget {
-  const ContentScreen({required this.chapter, super.key});
+class ContentDetailScreen extends StatefulWidget {
+  const ContentDetailScreen({required this.chapter, super.key});
 
   final Chapter chapter;
 
   @override
-  State<ContentScreen> createState() => _ContentScreenState();
+  State<ContentDetailScreen> createState() => _ContentDetailScreenState();
 }
 
-class _ContentScreenState extends State<ContentScreen> {
+class _ContentDetailScreenState extends State<ContentDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:awesome_icons/awesome_icons.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:admin_e_learning/chapter/shared/string_const.dart';
 import 'package:admin_e_learning/course/shared/app_const.dart';
@@ -9,12 +7,10 @@ import 'package:admin_e_learning/course/model/course_model.dart';
 import 'package:admin_e_learning/course/shared/color_const.dart';
 import 'package:admin_e_learning/chapter/shared/colors_const.dart';
 import 'package:admin_e_learning/course/ui/add_course_screen.dart';
-import 'package:admin_e_learning/chapter/service/chapter_service.dart';
 import 'package:admin_e_learning/chapter/ui/show_chapter_screen.dart';
 import 'package:admin_e_learning/course/service/course_service.dart';
 import 'package:admin_e_learning/course/ui/course_update_screen.dart';
 import 'package:admin_e_learning/course/provider/course_provider.dart';
-
 
 class ShowCourseScreen extends StatefulWidget {
   const ShowCourseScreen({super.key});
@@ -32,24 +28,6 @@ class _ShowCourseScreenState extends State<ShowCourseScreen> {
     courseProvider = Provider.of<CourseProvider>(context, listen: false);
     super.initState();
   }
-
-  DateTime _date = DateTime.now();
-
-  _handleDatePicker() async {
-    final DateTime? date = await showDatePicker(
-      context: context,
-      initialDate: _date,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-    if (date != null && date != _date) {
-      setState(() {
-        _date = date;
-      });
-    }
-  }
-
-  bool isSearch = false;
 
   @override
   Widget build(BuildContext context) {
@@ -69,54 +47,13 @@ class _ShowCourseScreenState extends State<ShowCourseScreen> {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
-        title: isSearch
-            ? TextField(
-                controller: itemController,
-                decoration: const InputDecoration(
-                  labelText: AppConst.searchText,
-                  labelStyle: TextStyle(color: ColorsConst.whiteColor),
-                ),
-                cursorColor: ColorsConst.whiteColor,
-              )
-            : const Text(
+        title: const Text(
                 AppConst.titleText2,
                 style: TextStyle(
                   color: ColorConst.whiteColor,
                   fontSize: 26,
                 ),
               ),
-        actions: [
-          IconButton(
-            onPressed: _handleDatePicker,
-            icon: const Icon(
-              Icons.calendar_month,
-              color: ColorsConst.whiteColor,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                isSearch = !isSearch;
-              });
-            },
-            icon: Icon(
-              isSearch ? Icons.clear : Icons.search,
-              color: ColorsConst.whiteColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: IconButton(
-              onPressed: () {
-                Share.share(AppConst.shareUrlText);
-              },
-              icon: const Icon(
-                FontAwesomeIcons.share,
-                color: ColorsConst.whiteColor,
-              ),
-            ),
-          ),
-        ],
         backgroundColor: ColorConst.greenColor,
       ),
       body: Consumer<CourseProvider>(builder: (create, provider, widget) {

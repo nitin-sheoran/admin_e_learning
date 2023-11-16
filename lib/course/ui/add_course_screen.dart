@@ -64,7 +64,7 @@ class AddCourseScreen extends StatelessWidget {
                   );
                   courseService.addCourse(course);
                   Fluttertoast.showToast(
-                    msg: 'Saved Successfully',
+                    msg: AppConst.toastText1,
                   );
                   allClear();
                 },

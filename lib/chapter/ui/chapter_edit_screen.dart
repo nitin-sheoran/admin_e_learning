@@ -1,5 +1,6 @@
 import 'package:admin_e_learning/chapter/model/chapter_model.dart';
 import 'package:admin_e_learning/chapter/service/chapter_service.dart';
+import 'package:admin_e_learning/chapter/shared/string_const.dart';
 import 'package:flutter/material.dart';
 import 'package:admin_e_learning/course/shared/app_const.dart';
 import 'package:admin_e_learning/course/shared/color_const.dart';
@@ -65,15 +66,15 @@ class _ChapterEditScreenState extends State<ChapterEditScreen> {
             TextField(
               controller: chapterNameController,
               decoration: const InputDecoration(
-                labelText: 'Chapter Name',
+                labelText: StringConst.labelText1,
               ),
             ),
             TextField(
               controller: contentController,
               decoration: const InputDecoration(
-                labelText: 'Chapter Content',
+                labelText: StringConst.labelText2,
               ),
-              maxLines: 3,
+              maxLines: 6,
             ),
             const SizedBox(
               height: 26,
@@ -89,7 +90,7 @@ class _ChapterEditScreenState extends State<ChapterEditScreen> {
                     chapterName: chapterNameController.text,
                   );
                    widget.chapterService.chapterUpdate(chapter);
-                  Fluttertoast.showToast(msg: 'Update Successfully');
+                  Fluttertoast.showToast(msg: StringConst.toastText2);
                   Navigator.pop(context);
                   chapterNameController.clear();
                   contentController.clear();

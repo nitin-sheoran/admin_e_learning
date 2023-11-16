@@ -1,5 +1,6 @@
 import 'package:admin_e_learning/chapter/model/chapter_model.dart';
 import 'package:admin_e_learning/chapter/service/chapter_service.dart';
+import 'package:admin_e_learning/chapter/shared/string_const.dart';
 import 'package:flutter/material.dart';
 import 'package:admin_e_learning/course/shared/app_const.dart';
 import 'package:admin_e_learning/course/shared/color_const.dart';
@@ -48,15 +49,15 @@ class AddChapterScreen extends StatelessWidget {
             TextField(
               controller: chapterNameController,
               decoration: const InputDecoration(
-                labelText: 'Chapter Name',
+                labelText: StringConst.labelText1,
               ),
             ),
             TextField(
               controller: contentController,
               decoration: const InputDecoration(
-                labelText: 'Chapter Content',
+                labelText: StringConst.labelText2
               ),
-              maxLines: 3,
+              maxLines: 6,
             ),
             const SizedBox(
               height: 26,
@@ -71,7 +72,7 @@ class AddChapterScreen extends StatelessWidget {
                     chapterName: chapterNameController.text,
                   );
                   chapterService.addChapter(chapter);
-                  Fluttertoast.showToast(msg: 'Saved Successfully');
+                  Fluttertoast.showToast(msg: StringConst.toastText);
                   Navigator.pop(context);
                   contentController.clear();
                   chapterNameController.clear();

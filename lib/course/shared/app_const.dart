@@ -16,5 +16,13 @@ class AppConst {
   static const String updateText = 'Edit Chapter';
   static const String updateText1 = 'Update Quiz';
 
+  static const String toastText1 = 'Saved Successfully';
+  static const String toastText2 = 'Update Successfully';
+
+  static const String shareUrlText = 'com.example.admin_e_learning';
+
+  static const String searchText = 'Search names...';
+  static const String titleText2 = 'Courses';
+
 }
 

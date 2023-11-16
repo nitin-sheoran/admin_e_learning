@@ -1,8 +1,7 @@
-import 'package:admin_e_learning/chapter/shared/colors_const.dart';
 import 'package:admin_e_learning/course/model/course_model.dart';
 import 'package:admin_e_learning/course/service/course_service.dart';
-import 'package:admin_e_learning/course/shared/app_const.dart';
-import 'package:admin_e_learning/course/shared/color_const.dart';
+import 'package:admin_e_learning/shared/colors_const.dart';
+import 'package:admin_e_learning/shared/string_const.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -38,8 +37,8 @@ class _CourseUpdateScreenState extends State<CourseUpdateScreen> {
       appBar: AppBar(
         title: const Center(
           child: Text(
-            AppConst.titleText,
-            style: TextStyle(color: ColorConst.whiteColor),
+            StringConst.titleText,
+            style: TextStyle(color: ColorsConst.whiteColor),
           ),
         ),
         leading: IconButton(
@@ -51,7 +50,7 @@ class _CourseUpdateScreenState extends State<CourseUpdateScreen> {
             color: ColorsConst.whiteColor,
           ),
         ),
-        backgroundColor: ColorConst.greenColor,
+        backgroundColor: ColorsConst.greenColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -60,13 +59,13 @@ class _CourseUpdateScreenState extends State<CourseUpdateScreen> {
             TextField(
               controller: courseNameController,
               decoration: const InputDecoration(
-                labelText: AppConst.courseNameText,
+                labelText: StringConst.courseNameText,
               ),
             ),
             TextField(
               controller: imgUrlController,
               decoration: const InputDecoration(
-                labelText: AppConst.imgUrlText,
+                labelText: StringConst.imgUrlText,
               ),
             ),
             const SizedBox(
@@ -83,11 +82,12 @@ class _CourseUpdateScreenState extends State<CourseUpdateScreen> {
                   );
                   widget.courseService.update(course);
                   Fluttertoast.showToast(
-                    msg: 'Saved Successfully',
+                    msg: StringConst.toastText3,
                   );
+                  Navigator.pop(context);
                 },
                 child: const Text(
-                  AppConst.buttonText,
+                  StringConst.buttonText,
                   style: TextStyle(fontSize: 20),
                 ),
               ),

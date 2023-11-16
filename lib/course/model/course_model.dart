@@ -1,4 +1,4 @@
-import 'package:admin_e_learning/course/shared/app_const.dart';
+import 'package:admin_e_learning/shared/string_const.dart';
 
 class Course {
   final String? courseId;
@@ -6,24 +6,24 @@ class Course {
   final String imgUrl;
 
   Course({
-     this.courseId,
+    this.courseId,
     required this.courseName,
-     this.imgUrl = AppConst.invertedComa,
+    this.imgUrl = StringConst.invertedComa,
   });
 
   static Course fromMap(Map<String, dynamic> map) {
     return Course(
-      courseId: map[AppConst.courseId],
-      courseName: map[AppConst.courseName],
-      imgUrl: map[AppConst.imgUrl],
+      courseId: map[StringConst.courseId1],
+      courseName: map[StringConst.courseName],
+      imgUrl: map[StringConst.imgUrl],
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      AppConst.courseId: courseId,
-      AppConst.courseName: courseName,
-      AppConst.imgUrl: imgUrl,
+      StringConst.courseId1: courseId,
+      StringConst.courseName: courseName,
+      StringConst.imgUrl: imgUrl,
     };
   }
 }

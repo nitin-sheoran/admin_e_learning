@@ -1,21 +1,21 @@
+import 'package:admin_e_learning/chapter/provider/chapter_provider.dart';
+import 'package:admin_e_learning/shared/colors_const.dart';
+import 'package:admin_e_learning/shared/string_const.dart';
+import 'package:flutter/material.dart';
 import 'package:admin_e_learning/chapter/model/chapter_model.dart';
-import 'package:admin_e_learning/chapter/service/chapter_service.dart';
-import 'package:admin_e_learning/chapter/shared/colors_const.dart';
 import 'package:admin_e_learning/chapter/ui/add_chapter_screen.dart';
-import 'package:admin_e_learning/chapter/ui/content_screen.dart';
+import 'package:admin_e_learning/chapter/ui/content_detail_screen.dart';
 import 'package:admin_e_learning/chapter/ui/chapter_edit_screen.dart';
 import 'package:admin_e_learning/course/model/course_model.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ShowChapterScreen extends StatefulWidget {
-  final ChapterService chapterService;
   final String courseId;
   final Course course;
 
   const ShowChapterScreen({
     required this.course,
-    required this.chapterService,
     required this.courseId,
     super.key,
   });
@@ -25,6 +25,14 @@ class ShowChapterScreen extends StatefulWidget {
 }
 
 class _ShowChapterScreenState extends State<ShowChapterScreen> {
+  late ChapterProvider chapterProvider;
+
+  @override
+  void initState() {
+    chapterProvider = Provider.of<ChapterProvider>(context, listen: false);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +44,7 @@ class _ShowChapterScreenState extends State<ShowChapterScreen> {
             MaterialPageRoute(
               builder: (context) => AddChapterScreen(
                 courseId: widget.courseId,
-                chapterService: widget.chapterService,
+                chapterService: chapterProvider.chapterService,
               ),
             ),
           );
@@ -56,7 +64,7 @@ class _ShowChapterScreenState extends State<ShowChapterScreen> {
               width: 10,
             ),
             const Text(
-              'Chapters',
+              StringConst.showChapterScreenText,
               style: TextStyle(
                 color: ColorsConst.whiteColor,
               ),
@@ -74,88 +82,99 @@ class _ShowChapterScreenState extends State<ShowChapterScreen> {
         ),
         backgroundColor: ColorsConst.blueColor,
       ),
-      body: StreamBuilder(
-        stream: widget.chapterService.getChapterStream(widget.courseId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            List<Chapter> chapterList = [];
-            DataSnapshot dataSnapshot = snapshot.data!.snapshot;
-            if (dataSnapshot.exists) {
-              final map = dataSnapshot.value as Map<String, dynamic>;
+      body: Consumer<ChapterProvider>(builder: (create, provider, widgets) {
+        return StreamBuilder(
+          stream: provider.getChapterStream(widget.courseId),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              List<Chapter> chapterList = [];
+              DataSnapshot dataSnapshot = snapshot.data!.snapshot;
+              if (dataSnapshot.exists) {
+                final map = dataSnapshot.value as Map<dynamic, dynamic>;
 
-              map.forEach((key, value) {
-                var chapter = Chapter(
-                  id: value['id'] ?? '',
-                  courseId: value['courseId'] ?? '',
-                  chapterName: value['chapterName'] ?? '',
-                  content: value['content'] ?? '',
-                );
-                chapterList.add(chapter);
-              });
-            }
-            return ListView.builder(
-              itemCount: chapterList.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(
-                    top: 10,
-                    right: 20,
-                    left: 20,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ContentScreen(
-                            chapter: chapterList[index],
-                          ),
-                        ),
-                      );
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ChapterEditScreen(
-                                        chapter: chapterList[index],
-                                        courseId: widget.courseId,
-                                        chapterService: widget.chapterService),
-                                  ),
-                                );
-                              },
-                              icon: const Icon(Icons.edit),
+                map.forEach((key, value) {
+                  var chapter = Chapter(
+                    id: value[StringConst.id] ?? '',
+                    courseId: value[StringConst.courseId1] ?? '',
+                    chapterName: value[StringConst.chapterName] ?? '',
+                    content: value[StringConst.content] ?? '',
+                  );
+                  chapterList.add(chapter);
+                });
+              }
+              return ListView.builder(
+                itemCount: chapterList.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                      top: 10,
+                      right: 20,
+                      left: 20,
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ContentDetailScreen(
+                              chapter: chapterList[index],
                             ),
-                            IconButton(
-                              onPressed: () {
-                                showDialog(
+                          ),
+                        );
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                chapterList[index].chapterName,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const Spacer(),
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ChapterEditScreen(
+                                          chapter: chapterList[index],
+                                          courseId: widget.courseId,
+                                          chapterService:
+                                              provider.chapterService),
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(Icons.edit),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  showDialog(
                                     context: context,
                                     builder: (context) {
                                       return AlertDialog(
-                                        title: const Text("Delete Alert"),
+                                        title: const Text(
+                                            StringConst.deleteAlertText),
                                         content: const Text(
-                                            "Are you sure to delete it ?"),
+                                            StringConst.deleteContentText),
                                         actions: [
                                           TextButton(
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },
                                               child: const Text(
-                                                "Cancel",
+                                                StringConst.cancelText,
                                               )),
                                           TextButton(
                                             onPressed: () async {
-                                              await widget.chapterService
+                                              await provider.chapterService
                                                   .chapterDelete(
                                                       chapterList[index]);
                                               if (mounted) {
@@ -163,40 +182,32 @@ class _ShowChapterScreenState extends State<ShowChapterScreen> {
                                               }
                                             },
                                             child: const Text(
-                                              "Delete",
+                                              StringConst.deleteText,
                                             ),
                                           ),
                                         ],
                                       );
-                                    });
-                              },
-                              icon: const Icon(
-                                Icons.delete,
-                                color: ColorsConst.redColor,
+                                    },
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: ColorsConst.redColor,
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              chapterList[index].chapterName,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Divider(color: ColorsConst.black12Color),
-                      ],
+                            ],
+                          ),
+                          const Divider(color: ColorsConst.black12Color),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            );
-          }
-        },
-      ),
+                  );
+                },
+              );
+            }
+          },
+        );
+      }),
     );
   }
 }

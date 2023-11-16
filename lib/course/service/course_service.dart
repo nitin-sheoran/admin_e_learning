@@ -39,4 +39,3 @@ class CourseService {
     await dbRef.child('courses').child(course.courseId.toString()).remove();
   }
 }
-//courses->random_id->set our data
